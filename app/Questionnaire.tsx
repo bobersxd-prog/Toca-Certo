@@ -8,7 +8,7 @@ const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 
 const initial: Answers = {
   turntable: "", journey: "", turntableModel: "", speakers: "", speakerType: "",
-  speakerModel: "", amplifier: "", amplifierModel: "", budget: "", included: "",
+  speakerModel: "", amplifier: "", amplifierModel: "", budget: "", budgetLimit: "", included: "",
   budgetPlan: "", essentials: [], operation: "", adjustments: "", used: "",
   room: "", space: "", volume: "", voltage: "", name: "", email: "", contact: "",
   notes: "", links: "", records: "", garimpo: "",
@@ -19,7 +19,7 @@ const steps = ["Objetivo", "Equipamentos", "Orçamento", "Preferências", "Ambie
 const labels: Record<string, string> = {
   turntable: "Situação do toca-discos", journey: "Objetivo", turntableModel: "Toca-discos atual",
   speakers: "Caixas existentes", speakerType: "Tipo das caixas", speakerModel: "Modelo das caixas",
-  amplifier: "Amplificador ou receiver", amplifierModel: "Modelo da amplificação", budget: "Orçamento",
+  amplifier: "Amplificador ou receiver", amplifierModel: "Modelo da amplificação", budget: "Faixa de orçamento", budgetLimit: "Limite máximo específico",
   included: "Escopo do orçamento", budgetPlan: "Se o orçamento não for suficiente",
   essentials: "Recursos indispensáveis", operation: "Operação", adjustments: "Ajustes do braço",
   used: "Equipamentos usados", room: "Ambiente", space: "Espaço", volume: "Volume habitual",
@@ -194,9 +194,10 @@ export function Questionnaire() {
         <Question n="5" title="Envie fotos dos equipamentos" help="Frente, etiqueta e conexões traseiras. Limite total de 10 MB." optional><label className="upload"><input type="file" accept="image/*" multiple onChange={chooseFiles}/><b>＋</b><strong>{files.length ? `${files.length} arquivo(s) selecionado(s)` : "Escolher fotos"}</strong><small>JPG, PNG ou HEIC</small></label>{files.length>0&&<div className="fileList">{files.map((file,index)=><span key={`${file.name}-${index}`}>{file.name}</span>)}</div>}</Question>
       </>}
 
-      {step === 2 && <><Intro n="03" title="Qual é o limite desta compra?" text="Vamos tratar o orçamento como teto, não como meta de gasto." />
-        <Question n="6" title="Qual é o valor máximo que você pretende investir agora?" help="Informe o teto total da compra, mesmo que prefira gastar menos."><Field label="Limite máximo" value={get("budget")} change={v=>set("budget",v)} placeholder="Ex.: R$ 2.000" /></Question>
+      {step === 2 && <><Intro n="03" title="Quanto você pretende investir?" text="A faixa ajuda a identificar quais arquiteturas de sistema são viáveis para a sua realidade." />
         {get("journey") === "Montar meu primeiro sistema completo" && get("speakers") === "Não tenho caixas" && get("amplifier") === "Não" && <div className="budgetHint"><b>Um cuidado para o seu caso</b><p>Considere informar o orçamento total para o sistema funcionar, incluindo toca-discos, caixas, amplificação, cabos e frete.</p></div>}
+        <Question n="6" title="Quanto você pretende investir inicialmente no sistema completo?" help="Considere toca-discos, caixas, amplificação, cabos e acessórios necessários."><Radio name="budget" value={get("budget")} change={v=>set("budget",v)} columns={2} options={opts("Até R$ 1.500","De R$ 1.500 a R$ 2.500","De R$ 2.500 a R$ 4.000","De R$ 4.000 a R$ 6.000","Acima de R$ 6.000","Ainda não sei quanto preciso investir")} /></Question>
+        <Question n="6.1" title="Tem um limite mais específico?" help="Digite o valor máximo aproximado. Exemplo: R$ 2.800." optional><Field label="Limite máximo aproximado" value={get("budgetLimit")} change={v=>set("budgetLimit",v)} placeholder="Ex.: R$ 2.800" /></Question>
         <Question n="7" title="Esse orçamento deve cobrir o quê?"><Radio name="included" value={get("included")} change={v=>set("included",v)} columns={2} options={opts(["Sistema completo pronto para tocar","Incluindo todos os componentes necessários"],["Somente o toca-discos","O restante do sistema já está resolvido"],["Toca-discos e caixas","O limite deve cobrir esses dois itens"],["Apenas um upgrade específico","Uma melhoria no sistema que já possuo"])} /></Question>
         <Question n="8" title="E se não for possível montar com segurança dentro desse valor?"><Radio name="budgetPlan" value={get("budgetPlan")} change={v=>set("budgetPlan",v)} options={opts(["Não ultrapassar o limite","Quero a melhor solução possível dentro dele"],["Comprar em etapas","Posso completar o sistema depois"],["Mostrar opção um pouco acima","Se a diferença realmente valer a pena"])} /></Question>
       </>}
