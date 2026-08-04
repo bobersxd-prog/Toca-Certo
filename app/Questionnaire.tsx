@@ -3,12 +3,14 @@
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 
 type Answers = Record<string, string | string[]>;
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/vitor_bonatto@hotmail.com";
+const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 
 const initial: Answers = {
   turntable: "", journey: "", turntableModel: "", speakers: "", speakerType: "",
   speakerModel: "", amplifier: "", amplifierModel: "", budget: "", included: [],
   budgetPlan: "", essentials: [], operation: "", adjustments: "", used: "",
-  room: "", space: "", volume: "", voltage: "", name: "", contact: "",
+  room: "", space: "", volume: "", voltage: "", name: "", email: "", contact: "",
   notes: "", links: "", records: "", garimpo: "",
 };
 
@@ -21,7 +23,7 @@ const labels: Record<string, string> = {
   included: "O orçamento inclui", budgetPlan: "Se o orçamento não for suficiente",
   essentials: "Recursos indispensáveis", operation: "Operação", adjustments: "Ajustes do braço",
   used: "Equipamentos usados", room: "Ambiente", space: "Espaço", volume: "Volume habitual",
-  voltage: "Tensão", name: "Nome no relatório", contact: "Contato", notes: "Observações",
+  voltage: "Tensão", name: "Nome no relatório", email: "E-mail da compra", contact: "Contato", notes: "Observações",
   links: "Links e modelos considerados", records: "Sugestões de discos", garimpo: "Garimpo Vivinil",
 };
 
@@ -55,11 +57,12 @@ const opts = (...items: (string | [string, string])[]): Option[] => items.map(it
 export function Questionnaire() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Answers>(initial);
-  const [files, setFiles] = useState<string[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
   const [started, setStarted] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     const raw = localStorage.getItem("setup-vinil-form");
@@ -75,7 +78,7 @@ export function Questionnaire() {
 
   const summary = useMemo(() => {
     const lines = Object.entries(answers).filter(([,v]) => Array.isArray(v) ? v.length : v.trim()).map(([k,v]) => `${labels[k]}: ${Array.isArray(v) ? v.join(", ") : v}`);
-    if (files.length) lines.push(`Fotos selecionadas: ${files.join(", ")}`);
+    if (files.length) lines.push(`Fotos selecionadas: ${files.map(file => file.name).join(", ")}`);
     return `TOCA CERTO — QUESTIONÁRIO DE TESTE\n\n${lines.join("\n")}`;
   }, [answers, files]);
 
@@ -86,21 +89,57 @@ export function Questionnaire() {
       get("budget") && list("included").length && get("budgetPlan"),
       get("operation") && get("adjustments") && get("used"),
       get("room") && get("space") && get("volume") && get("voltage"),
-      get("name").trim(),
+      get("name").trim() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(get("email").trim()),
     ];
     if (!rules[step]) setError("Responda às perguntas desta etapa antes de continuar.");
     return Boolean(rules[step]);
   }
 
-  function next() {
+  async function next() {
     if (!valid()) return;
-    if (step === steps.length - 1) { setDone(true); localStorage.removeItem("setup-vinil-form"); }
-    else setStep(s => s + 1);
+    if (step === steps.length - 1) {
+      setSubmitting(true);
+      setError("");
+      try {
+        const formData = new FormData();
+        Object.entries(answers).forEach(([key, value]) => {
+          const formatted = Array.isArray(value) ? value.join(", ") : value.trim();
+          if (formatted) formData.append(labels[key] ?? key, formatted);
+        });
+        formData.append("email", get("email").trim());
+        formData.append("_replyto", get("email").trim());
+        formData.append("_subject", `Novo diagnóstico Toca Certo — ${get("name").trim()}`);
+        formData.append("_template", "table");
+        formData.append("Resumo completo", summary);
+        files.forEach(file => formData.append("attachment", file, file.name));
+
+        const response = await fetch(FORM_ENDPOINT, { method: "POST", headers: { Accept: "application/json" }, body: formData });
+        const result = await response.json().catch(() => null);
+        if (!response.ok || result?.success === false || result?.success === "false") throw new Error("Falha no envio");
+
+        setDone(true);
+        localStorage.removeItem("setup-vinil-form");
+      } catch {
+        setError("Não conseguimos enviar agora. Suas respostas continuam salvas neste dispositivo. Tente novamente em alguns instantes.");
+      } finally {
+        setSubmitting(false);
+      }
+    } else setStep(s => s + 1);
     scrollTo({ top: 0, behavior: "smooth" });
   }
   function back() { setError(""); setStep(s => Math.max(0, s - 1)); scrollTo({ top: 0, behavior: "smooth" }); }
   function reset() { setAnswers(initial); setFiles([]); setStep(0); setStarted(false); setDone(false); localStorage.removeItem("setup-vinil-form"); }
-  function chooseFiles(e: ChangeEvent<HTMLInputElement>) { setFiles(Array.from(e.target.files || []).map(f => f.name)); }
+  function chooseFiles(e: ChangeEvent<HTMLInputElement>) {
+    const selected = Array.from(e.target.files || []);
+    if (selected.reduce((total, file) => total + file.size, 0) > MAX_UPLOAD_BYTES) {
+      setFiles([]);
+      setError("As fotos ultrapassam 10 MB no total. Escolha menos arquivos ou imagens menores.");
+      e.target.value = "";
+      return;
+    }
+    setFiles(selected);
+    setError("");
+  }
   async function copy() { await navigator.clipboard.writeText(summary); setCopied(true); setTimeout(() => setCopied(false), 2000); }
 
   if (!started) return <main className="landing">
@@ -111,13 +150,13 @@ export function Questionnaire() {
       <p>Conte o que você já tem, quanto quer investir e como pretende ouvir seus discos. A partir disso, montaremos uma recomendação completa e compatível.</p>
       <div className="facts"><span><b>6</b> etapas curtas</span><span><b>≈ 8</b> minutos</span><span><b>1</b> relatório personalizado</span></div>
       <button className="primary" onClick={() => setStarted(true)}>Começar meu diagnóstico <b>→</b></button>
-      <small className="privacy">Neste protótipo, suas respostas ficam somente neste dispositivo.</small>
+      <small className="privacy">O rascunho fica neste dispositivo. Ao finalizar, as respostas serão enviadas para análise.</small>
     </section><Record />
   </main>;
 
   if (done) return <main className="page"><Top beta="Protótipo" /><section className="success">
     <div className="successIcon">✓</div><div className="eyebrow">Teste concluído</div><h1>Obrigado, {get("name")}.</h1>
-    <p>Como esta versão ainda não envia dados, copie o resumo e cole na conversa para continuarmos seu relatório.</p>
+    <p>Seu diagnóstico foi enviado para análise. Guarde uma cópia das respostas se quiser consultar o que informou.</p>
     <pre>{summary}</pre><div className="successActions"><button className="primary" onClick={copy}>{copied ? "Respostas copiadas!" : "Copiar respostas"}</button><button className="text" onClick={reset}>Novo teste</button></div>
   </section></main>;
 
@@ -136,7 +175,7 @@ export function Questionnaire() {
         {get("speakers") && get("speakers") !== "Não tenho caixas" && <Panel><Question n="3.1" title="Elas ligam diretamente na tomada?" help="Isso ajuda a descobrir se são ativas ou passivas."><Radio name="speakerType" value={get("speakerType")} change={v=>set("speakerType",v)} columns={3} options={opts(["Ativas — ligam na tomada","Sim"],["Passivas — não ligam na tomada","Não"],["Não sei","Vou enviar fotos"])} /></Question><Field label="Marca e modelo das caixas" value={get("speakerModel")} change={v=>set("speakerModel",v)} placeholder="Escreva o que aparece na etiqueta" /></Panel>}
         <Question n="4" title="Existe amplificador, receiver ou outro aparelho ligado às caixas?"><Radio name="amplifier" value={get("amplifier")} change={v=>set("amplifier",v)} columns={3} options={opts("Não","Sim","Não sei identificar")} /></Question>
         {get("amplifier") && get("amplifier") !== "Não" && <Panel><Field label="Qual aparelho?" value={get("amplifierModel")} change={v=>set("amplifierModel",v)} placeholder="Marca e modelo, se souber" /></Panel>}
-        <Question n="5" title="Envie fotos dos equipamentos" help="Frente, etiqueta e conexões traseiras." optional><label className="upload"><input type="file" accept="image/*" multiple onChange={chooseFiles}/><b>＋</b><strong>{files.length ? `${files.length} arquivo(s) selecionado(s)` : "Escolher fotos"}</strong><small>JPG, PNG ou HEIC</small></label>{files.length>0&&<div className="fileList">{files.map(f=><span key={f}>{f}</span>)}</div>}</Question>
+        <Question n="5" title="Envie fotos dos equipamentos" help="Frente, etiqueta e conexões traseiras. Limite total de 10 MB." optional><label className="upload"><input type="file" accept="image/*" multiple onChange={chooseFiles}/><b>＋</b><strong>{files.length ? `${files.length} arquivo(s) selecionado(s)` : "Escolher fotos"}</strong><small>JPG, PNG ou HEIC</small></label>{files.length>0&&<div className="fileList">{files.map((file,index)=><span key={`${file.name}-${index}`}>{file.name}</span>)}</div>}</Question>
       </>}
 
       {step === 2 && <><Intro n="03" title="Quanto você quer investir?" text="O orçamento é para o sistema funcionar por completo, sem compras-surpresa depois." />
@@ -161,13 +200,14 @@ export function Questionnaire() {
 
       {step === 5 && <><Intro n="06" title="Falta alguma coisa?" text="Este espaço existe justamente para capturar o que o questionário não previu." />
         <Question n="17" title="Como você quer ser chamado no relatório?" help="Usaremos este nome somente para identificar sua entrega."><Field label="Seu nome" value={get("name")} change={v=>set("name",v)} placeholder="Seu nome" /></Question>
-        <Question n="18" title="Qual é o melhor contato?" help="Na versão final, será usado para avisar quando o relatório estiver pronto." optional><Field label="WhatsApp ou e-mail" value={get("contact")} change={v=>set("contact",v)} placeholder="WhatsApp ou e-mail" /></Question>
-        <Question n="19" title="Tem algo importante que não perguntamos?" help="Pode contar sobre objetivo, espaço, equipamentos ou qualquer restrição." optional><textarea value={get("notes")} onChange={e=>set("notes",e.target.value)} placeholder="Escreva livremente…" rows={5}/></Question>
-        <Question n="20" title="Já está considerando algum produto?" help="Cole links ou escreva os modelos." optional><textarea value={get("links")} onChange={e=>set("links",e.target.value)} placeholder="Links ou modelos…" rows={3}/></Question>
+        <Question n="18" title="Qual e-mail você usou na compra?" help="Usaremos para identificar seu pagamento e avisar quando o relatório estiver pronto."><Field label="Seu e-mail" type="email" value={get("email")} change={v=>set("email",v)} placeholder="voce@exemplo.com" /></Question>
+        <Question n="19" title="Quer informar também um WhatsApp?" optional><Field label="WhatsApp" value={get("contact")} change={v=>set("contact",v)} placeholder="(00) 00000-0000" /></Question>
+        <Question n="20" title="Tem algo importante que não perguntamos?" help="Pode contar sobre objetivo, espaço, equipamentos ou qualquer restrição." optional><textarea value={get("notes")} onChange={e=>set("notes",e.target.value)} placeholder="Escreva livremente…" rows={5}/></Question>
+        <Question n="21" title="Já está considerando algum produto?" help="Cole links ou escreva os modelos." optional><textarea value={get("links")} onChange={e=>set("links",e.target.value)} placeholder="Links ou modelos…" rows={3}/></Question>
         <div className="bonus"><mark>Opcional</mark><h2>Depois do setup, os discos</h2><p>Estes itens não alteram o diagnóstico técnico.</p><label>Quer receber sugestões de discos?</label><Radio name="records" value={get("records")} change={v=>set("records",v)} columns={2} options={opts("Sim","Não")} /><label>Quer conhecer futuramente o Grupo de Garimpo da Vivinil?</label><Radio name="garimpo" value={get("garimpo")} change={v=>set("garimpo",v)} columns={2} options={opts("Sim, tenho interesse","Agora não")} /></div>
       </>}
       {error && <div className="error" role="alert">{error}</div>}
-      <footer>{step > 0 ? <button className="secondary" onClick={back}>← Voltar</button> : <button className="text" onClick={()=>setStarted(false)}>Sair</button>}<button className="primary" onClick={next}>{step===5?"Revisar respostas":"Continuar"} <b>→</b></button></footer>
+      <footer>{step > 0 ? <button className="secondary" onClick={back} disabled={submitting}>← Voltar</button> : <button className="text" onClick={()=>setStarted(false)}>Sair</button>}<button className="primary" onClick={next} disabled={submitting}>{submitting?"Enviando…":step===5?"Enviar diagnóstico":"Continuar"} <b>→</b></button></footer>
     </form></div>
   </main>;
 }
@@ -177,4 +217,4 @@ function Top({ beta = "Rascunho salvo" }: { beta?: string }) { return <header cl
 function Record() { return <div className="record" aria-hidden="true"><i/><i/><i/><b><span>SEU<br/>SETUP</span></b></div>; }
 function Intro({n,title,text}:{n:string;title:string;text:string}) { return <div className="intro"><b>{n}</b><div><h1>{title}</h1><p>{text}</p></div></div>; }
 function Panel({children}:{children:React.ReactNode}) { return <div className="panel">{children}</div>; }
-function Field({label,value,change,placeholder}:{label:string;value:string;change:(v:string)=>void;placeholder:string}) { return <label className="field"><span>{label}</span><input value={value} onChange={e=>change(e.target.value)} placeholder={placeholder}/></label>; }
+function Field({label,value,change,placeholder,type="text"}:{label:string;value:string;change:(v:string)=>void;placeholder:string;type?:"text"|"email"}) { return <label className="field"><span>{label}</span><input type={type} value={value} onChange={e=>change(e.target.value)} placeholder={placeholder}/></label>; }
