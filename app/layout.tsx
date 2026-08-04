@@ -7,7 +7,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const image = `${protocol}://${host}/og.png`;
-  const description = "Um projeto personalizado para montar ou melhorar seu sistema de vinil sem compras incompatíveis ou desnecessárias.";
+  const description = "Monte seu sistema de vinil completo e compatível sem gastar errado em equipamentos que não funcionam juntos.";
 
   return {
     title: "Toca Certo | O sistema certo para ouvir seus discos",

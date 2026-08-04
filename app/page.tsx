@@ -1,132 +1,158 @@
 const CHECKOUT_URL = "https://pay.hotmart.com/N107012543U";
 
-const doubts = [
-  "O toca-discos já possui pré-amplificador?",
-  "As caixas precisam ser ativas ou passivas?",
-  "Ainda será necessário um amplificador?",
-  "O Bluetooth envia ou apenas recebe áudio?",
-  "Quais cabos e adaptadores estão faltando?",
-  "Esse sistema poderá evoluir no futuro?",
+const confusions = [
+  ["Pré-amplificação", "O toca-discos já tem pré? Você precisa de um externo ou o receiver resolve?"],
+  ["Caixas", "Ativas ou passivas? Qual delas funciona com os outros equipamentos escolhidos?"],
+  ["Amplificação", "Receiver, amplificador integrado e pré-phono não cumprem a mesma função."],
+  ["Bluetooth", "Alguns aparelhos recebem áudio. Outros enviam. A palavra Bluetooth sozinha não explica isso."],
+  ["Compatibilidade", "Um bom aparelho isolado ainda pode ser uma compra errada dentro do sistema."],
+];
+
+const differences = [
+  ["01", "O sistema inteiro entra na análise", "Toca-discos, caixas, amplificação, cabos e acessórios são escolhidos como partes da mesma arquitetura."],
+  ["02", "A recomendação parte da sua realidade", "Seu orçamento, espaço, equipamentos atuais e nível de praticidade definem o projeto — não uma lista genérica."],
+  ["03", "Você entende a escolha e o próximo passo", "Cada indicação vem com vantagens, limitações e um caminho de evolução para não precisar trocar tudo depois."],
+];
+
+const comparison = [
+  ["Ponto de partida", "Dezenas de vídeos, listas e opiniões", "Seu orçamento, espaço e equipamentos"],
+  ["Compatibilidade", "Você precisa conferir componente por componente", "O sistema é analisado como um conjunto"],
+  ["Preço real", "Aparecem custos extras depois da escolha", "Cabos, adaptadores e acessórios entram na conta"],
+  ["Decisão", "Mais opções podem aumentar a dúvida", "Três caminhos comparados e explicados"],
+  ["Futuro", "O upgrade é pensado somente depois", "A evolução já faz parte do projeto"],
 ];
 
 const deliverables = [
-  ["Diagnóstico do seu perfil", "Objetivo, orçamento, espaço, equipamentos atuais e o nível de praticidade que você procura."],
-  ["Três possibilidades de setup", "Uma recomendação principal, uma alternativa econômica e outra com maior potencial de evolução."],
-  ["Comparativo claro", "Preço total, recursos, praticidade, limitações, compatibilidade e possibilidade de upgrade."],
-  ["Lista completa de compra", "Equipamentos, cabos, adaptadores e acessórios — inclusive aquilo que você não precisa comprar."],
-  ["Diagrama de conexão", "Uma representação simples de onde cada aparelho e cabo entra no sistema."],
-  ["Plano de upgrades", "O que melhorar primeiro, o que pode esperar e o que continuará útil no futuro."],
+  ["Página exclusiva", "Seu plano fica organizado em um endereço individual, feito para consultar durante a compra e a montagem."],
+  ["Diagnóstico personalizado", "Uma leitura clara do seu momento, prioridades, equipamentos atuais e restrições."],
+  ["Até três sistemas completos", "Custo-benefício, recomendação principal e opção evolutiva — quando esses três caminhos fizerem sentido."],
+  ["Comparativo e mapa de compras", "Preços pesquisados, recursos, links, cabos, adaptadores e itens opcionais reunidos no mesmo lugar."],
+  ["Conexão e explicações", "Um diagrama simples mostra como tudo se liga; os textos explicam escolhas, limitações e alternativas."],
+  ["Plano de upgrades e suporte", "Ordem de evolução, uma rodada de dúvidas e uma revisão relacionada ao diagnóstico original."],
 ];
 
 const faqs = [
-  ["Não posso pesquisar tudo sozinho?", "Pode. O projeto existe para reduzir o tempo de pesquisa, organizar a compatibilidade do sistema e evitar que você só descubra depois da compra que ainda faltam outros aparelhos."],
-  ["Vou receber apenas uma lista de produtos?", "Não. A recomendação começa pela arquitetura do sistema: o que será conectado, o que pode ser reaproveitado e quais recursos realmente importam para você."],
-  ["Tenho equipamentos antigos. Eles podem ser aproveitados?", "Possivelmente. O diagnóstico pede marca, modelo e fotos das conexões para identificar o que ainda faz sentido manter."],
-  ["E se os preços mudarem depois?", "O relatório registra os preços pesquisados e apresenta alternativas. Durante a revisão incluída, a recomendação pode ser ajustada caso uma opção fique indisponível antes da compra."],
-  ["As recomendações podem ter links comissionados?", "Sim, sempre identificados com transparência. A existência de comissão não substitui os critérios de compatibilidade e não impede a indicação de alternativas sem comissão."],
-  ["O serviço inclui conserto ou instalação?", "Não. O Toca Certo é um projeto de curadoria e orientação de compra. Não inclui reparo eletrônico, instalação presencial ou projeto acústico."],
+  ["É um curso sobre toca-discos?", "Não. Você responde ao diagnóstico e recebe um projeto feito para a sua situação. As explicações servem para tornar a decisão compreensível, não para obrigar você a estudar áudio."],
+  ["Posso pesquisar tudo sozinho?", "Sim. O Toca Certo existe para economizar esse tempo, organizar as informações e reduzir o risco de descobrir incompatibilidades somente depois da compra."],
+  ["Tenho um toca-discos ou caixas antigas. Dá para aproveitar?", "A análise considera marca, modelo, estado aparente e fotos das conexões. O relatório mostra o que pode continuar no sistema e onde estão as limitações."],
+  ["Existe um orçamento mínimo?", "Não existe um valor obrigatório. Se o orçamento não permitir montar agora todo o sistema desejado, o plano poderá organizar uma compra por etapas e mostrar com clareza o que ainda ficará faltando."],
+  ["Vocês indicam equipamentos novos e usados?", "As duas possibilidades podem ser consideradas, de acordo com sua preferência, a segurança da compra e a disponibilidade encontrada durante a análise."],
+  ["O valor dos equipamentos está incluído?", "Não. O preço da oferta é pelo diagnóstico e pelo projeto. Os equipamentos são comprados separadamente nas lojas escolhidas pelo cliente."],
+  ["Vou precisar fazer videochamada?", "Não. O processo começa pelo questionário. Entrarei em contato somente se alguma resposta precisar ser esclarecida antes da análise."],
+  ["Como receberei meu projeto?", "Você receberá por e-mail uma página exclusiva com seu plano completo. O prazo é de até 5 dias úteis após o envio integral do questionário."],
+  ["Vocês recebem comissão nas indicações?", "Alguns links poderão ser comissionados e serão identificados. Isso não substitui os critérios de compatibilidade nem impede a apresentação de alternativas sem comissão."],
+  ["O serviço inclui instalação ou conserto?", "Não. O projeto orienta a conexão e a compra, mas não inclui instalação presencial, reparo eletrônico, avaliação elétrica ou tratamento acústico."],
+  ["Posso pedir alterações?", "Está incluída uma rodada de dúvidas e uma revisão relacionada às informações enviadas originalmente. Uma mudança completa de orçamento ou objetivo poderá exigir uma nova análise."],
+  ["E se a recomendação não fizer sentido?", "Você poderá pedir a revisão incluída. Se, mesmo depois dela, o projeto não responder adequadamente ao diagnóstico enviado, o valor será devolvido."],
 ];
 
-function Logo() {
-  return <span className="tc-logo" aria-hidden="true"><i /><b /></span>;
+function V2Logo() {
+  return <span className="v2-logo" aria-hidden="true"><i /><b /></span>;
 }
 
-function Brand() {
-  return <a className="tc-brand" href="#inicio"><Logo /><span>Toca Certo<small>Do primeiro toca-discos ao próximo upgrade</small></span></a>;
+function V2Brand() {
+  return <a className="v2-brand" href="#topo"><V2Logo /><span><strong>Toca Certo</strong><small>Seu sistema de vinil, sem compras erradas.</small></span></a>;
 }
 
 export default function Home() {
-  return <main className="tc-page" id="inicio">
-    <nav className="tc-nav">
-      <Brand />
-      <a className="tc-nav-cta" href="#oferta">Conhecer o projeto</a>
-    </nav>
-
-    <section className="tc-hero tc-shell">
-      <div className="tc-hero-copy">
-        <span className="tc-eyebrow">Projeto personalizado para ouvir vinil</span>
-        <h1>Você já tem os discos. Agora monte o <em>sistema certo</em> para ouvi-los.</h1>
-        <p>Receba um projeto personalizado com toca-discos, caixas, amplificação, cabos e acessórios adequados ao seu orçamento, espaço e maneira de ouvir música.</p>
-        <div className="tc-actions">
-          <a className="tc-button" href={CHECKOUT_URL}>Quero descobrir meu setup ideal <span>→</span></a>
-          <small>Edição beta · proposta inicial</small>
+  return <main className="v2-page" id="topo">
+    <section className="v2-hero v2-shell">
+      <figure className="v2-hero-logo"><img src="/VTSD%20TOCACERTO/logo.png" alt="Toca Certo" width="1536" height="1024" fetchPriority="high" /></figure>
+      <div className="v2-hero-grid">
+        <div className="v2-hero-copy">
+          <span className="v2-overline">Antes de comprar o primeiro aparelho</span>
+          <h1>Não compre seu toca-discos antes de saber <em>tudo o que precisa para fazê-lo tocar.</em></h1>
+          <p>Receba um projeto personalizado com os equipamentos compatíveis para seu orçamento, espaço e forma de ouvir música.</p>
+          <div className="v2-hero-actions">
+            <a className="v2-button" href={CHECKOUT_URL}>Quero montar meu sistema certo <span>→</span></a>
+            <small>Pagamento único de R$ 67<br/>Sem videochamada obrigatória.</small>
+          </div>
         </div>
-      </div>
-      <div className="tc-system" aria-label="Ilustração de um toca-discos conectado a caixas">
-        <div className="tc-turntable"><span className="tc-record"><i /></span><span className="tc-arm" /></div>
-        <div className="tc-cable"><i /><i /><i /></div>
-        <div className="tc-speaker"><i /><b /></div>
-        <span className="tc-system-note">Um sistema completo.<br/>Não apenas um aparelho.</span>
+        <figure className="v2-hero-art"><img src="/VTSD%20TOCACERTO/1.png" alt="Toca-discos, amplificação e caixa conectados com a frase: um bom toca-discos ainda precisa do sistema certo" width="1448" height="1086" fetchPriority="high" /></figure>
       </div>
     </section>
 
-    <section className="tc-problem tc-shell">
-      <div className="tc-section-heading">
-        <span className="tc-kicker">Parece simples até começar a pesquisar</span>
-        <h2>Comprar um toca-discos é só uma parte da decisão.</h2>
-        <p>Um modelo pode parecer perfeito sozinho e ainda assim não funcionar com as caixas, exigir equipamentos extras ou limitar o próximo upgrade.</p>
-      </div>
-      <div className="tc-doubts">{doubts.map((item, index) => <article key={item}><span>{String(index + 1).padStart(2, "0")}</span><p>{item}</p></article>)}</div>
-      <div className="tc-warning"><strong>O risco não é apenas pagar caro.</strong><p>É comprar componentes incompatíveis, repetir funções, estourar o orçamento ou descobrir que o toca-discos não era o sistema completo.</p></div>
-    </section>
-
-    <section className="tc-paths">
-      <div className="tc-shell">
-        <div className="tc-section-heading tc-light"><span className="tc-kicker">Do ponto em que você está</span><h2>Dois momentos. O mesmo objetivo: fazer seu dinheiro tocar melhor.</h2></div>
-        <div className="tc-path-grid">
-          <article><span>01</span><h3>Meu Primeiro Setup</h3><p>Para quem já tem discos, mas ainda precisa montar um sistema completo, compatível e adequado ao orçamento.</p><ul><li>Definir a arquitetura do sistema</li><li>Escolher caixas e amplificação</li><li>Entender tudo o que precisa comprar</li></ul></article>
-          <article><span>02</span><h3>Meu Próximo Upgrade</h3><p>Para quem já possui equipamentos e quer descobrir o que aproveitar e qual mudança fará mais diferença.</p><ul><li>Identificar o principal ponto fraco</li><li>Evitar trocas desnecessárias</li><li>Organizar uma evolução por etapas</li></ul></article>
+    <section className="v2-problem">
+      <div className="v2-shell">
+        <header className="v2-section-head">
+          <span className="v2-number">02</span>
+          <div className="v2-emotional-copy"><span className="v2-overline">Você já investiu na coleção</span><h2>Agora falta um sistema pensado para ouvi-la.</h2><p>Talvez você já tenha pago R$ 300, R$ 400 ou até R$ 500 por um disco especial, mas ainda esteja adiando a compra do primeiro toca-discos — ou usando um equipamento improvisado sem saber se ele realmente é adequado para sua coleção.</p><p>O problema é que escolher apenas um toca-discos pode não resolver. Dependendo do modelo, você também precisará de caixas, pré-phono, amplificação, cabos e componentes compatíveis entre si.</p><strong>O Toca Certo ajuda você a descobrir o sistema completo que faz sentido para seu espaço, orçamento e forma de ouvir música.</strong></div>
+        </header>
+        <figure className="v2-section-art v2-problem-art"><img src="/VTSD%20TOCACERTO/2.png" alt="Comparação visual entre a confusão de escolher equipamentos isolados e a clareza de montar um sistema compatível" width="1672" height="941" loading="lazy" /></figure>
+        <div className="v2-confusion-grid">{confusions.map(([title, copy]) => <article key={title}><span>?</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+        <div className="v2-solution-intro">
+          <div><span className="v2-overline">É aqui que entra o Toca Certo</span><h2>Você me conta sua realidade.<br/>Eu organizo a decisão inteira.</h2></div>
+          <div><p>Você informa seu espaço, orçamento, maneira de ouvir música e o que já possui. A partir disso, eu preparo um plano completo do sistema que faz sentido para você — incluindo o que comprar, o que reaproveitar e o que pode esperar.</p><a className="v2-inline-cta" href={CHECKOUT_URL}>Quero receber minha recomendação <span>→</span></a></div>
         </div>
       </div>
     </section>
 
-    <section className="tc-how tc-shell">
-      <div className="tc-section-heading"><span className="tc-kicker">Como funciona</span><h2>Da sua realidade a um projeto que você consegue executar.</h2></div>
-      <div className="tc-steps">
-        <article><b>1</b><h3>Você responde ao diagnóstico</h3><p>Depois da compra, conta o que já possui, quanto pode gastar e como quer usar o sistema.</p></article>
-        <article><b>2</b><h3>O sistema é pesquisado como um todo</h3><p>Compatibilidade, preços, disponibilidade, praticidade, limitações e caminhos de evolução entram na análise.</p></article>
-        <article><b>3</b><h3>Você recebe um projeto claro</h3><p>Com opções comparadas, lista de compra, diagrama de conexão e explicações em linguagem acessível.</p></article>
+    <section className="v2-differences v2-shell">
+      <header className="v2-section-head">
+        <span className="v2-number">04</span>
+        <div><span className="v2-overline">O que tem de diferente?</span><h2>Uma recomendação não começa pelo produto. Começa pela pessoa.</h2></div>
+      </header>
+      <div className="v2-difference-list">{differences.map(([number, title, copy]) => <article key={number}><span>{number}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
+    </section>
+
+    <section className="v2-practice">
+      <div className="v2-shell">
+        <header className="v2-section-head v2-head-light">
+          <span className="v2-number">05</span>
+          <div><span className="v2-overline">Como fica na prática</span><h2>Você recebe uma página exclusiva com seu plano completo.</h2><p>Compare caminhos, entenda cada indicação e consulte tudo durante a compra e a montagem.</p></div>
+        </header>
+        <figure className="v2-section-art v2-practice-art"><img src="/VTSD%20TOCACERTO/4.png" alt="Exemplo da página personalizada do Toca Certo aberta em computador e celular" width="1448" height="1086" loading="lazy" /><figcaption>Exemplo ilustrativo da página individual entregue ao cliente.</figcaption></figure>
+        <div className="v2-practice-close"><p>Você poderá receber até três possibilidades. Quando duas opções bem construídas forem suficientes, não inventaremos uma terceira apenas para preencher espaço.</p><a className="v2-button v2-button-light" href={CHECKOUT_URL}>Quero um plano feito para mim <span>→</span></a></div>
       </div>
     </section>
 
-    <section className="tc-delivery">
-      <div className="tc-shell tc-delivery-grid">
-        <div>
-          <div className="tc-section-heading"><span className="tc-kicker">O que você recebe</span><h2>As respostas que faltavam antes de comprar.</h2></div>
-          <div className="tc-deliverables">{deliverables.map(([title, copy], index) => <article key={title}><span>{index + 1}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div>
-        </div>
-        <aside className="tc-report">
-          <small>Exemplo ilustrativo</small>
-          <header><Logo /><div><b>Seu projeto Toca Certo</b><span>Relatório personalizado</span></div></header>
-          <div className="tc-report-profile"><i>Perfil</i><strong>Primeiro sistema · até R$ 2.500</strong><p>Apartamento · caixas inclusas · prioridade em praticidade</p></div>
-          <div className="tc-report-option"><span>Recomendação principal</span><strong>Setup equilibrado</strong><p>Toca-discos → caixas ativas</p><b>R$ 2.340</b></div>
-          <div className="tc-report-row"><span>Alternativa econômica</span><b>R$ 1.890</b></div>
-          <div className="tc-report-row"><span>Opção evolutiva</span><b>R$ 2.940</b></div>
-          <footer><i>✓ Compatibilidade verificada</i><i>✓ Cabos incluídos na lista</i></footer>
-        </aside>
+    <section className="v2-proof v2-shell">
+      <header className="v2-section-head">
+        <span className="v2-number">06</span>
+        <div><span className="v2-overline">Decisões que a análise ajuda a evitar</span><h2>O gasto errado quase nunca está em um único aparelho.</h2><p>Enquanto os primeiros casos reais são construídos, estes exemplos demonstrativos mostram o tipo de decisão que entra na análise — sem depoimentos inventados.</p></div>
+      </header>
+      <div className="v2-proof-grid">
+        <article><span>EXEMPLO DEMONSTRATIVO</span><h3>As caixas eram passivas.</h3><p><b>Antes:</b> comprar somente o toca-discos.<br/><b>Problema:</b> as caixas não poderiam ser ligadas diretamente.<br/><b>Decisão:</b> incluir amplificação e os cabos corretos no orçamento.</p><small>Compatibilidade antes da compra</small></article>
+        <article><span>EXEMPLO DEMONSTRATIVO</span><h3>O orçamento estava desequilibrado.</h3><p><b>Antes:</b> concentrar quase todo o valor no toca-discos.<br/><b>Problema:</b> sobraria pouco para a parte que transformaria o sinal em som.<br/><b>Decisão:</b> redistribuir o investimento pelo sistema.</p><small>Orçamento visto como conjunto</small></article>
+        <article><span>EXEMPLO DEMONSTRATIVO</span><h3>Já existia uma peça útil.</h3><p><b>Antes:</b> substituir todo o conjunto antigo.<br/><b>Problema:</b> um componente ainda cumpria bem sua função.<br/><b>Decisão:</b> reaproveitá-lo e investir primeiro no ponto mais fraco.</p><small>Upgrade sem começar de novo</small></article>
+      </div>
+      <div className="v2-proof-cta"><p>Você continua escolhendo quanto quer investir. A diferença é decidir sabendo como tudo funcionará junto.</p><a className="v2-inline-cta" href={CHECKOUT_URL}>Quero analisar meu sistema <span>→</span></a></div>
+    </section>
+
+    <section className="v2-comparison">
+      <div className="v2-shell">
+        <header className="v2-section-head"><span className="v2-number">07</span><div><span className="v2-overline">Pesquisar sozinho ou receber um plano?</span><h2>Informação grátis existe. O difícil é transformar tudo em uma decisão.</h2></div></header>
+        <div className="v2-table"><div className="v2-table-head"><span></span><strong>Pesquisando sozinho</strong><strong>Com o Toca Certo</strong></div>{comparison.map(([label, alone, guided]) => <div className="v2-table-row" key={label}><b>{label}</b><span>{alone}</span><span>{guided}</span></div>)}</div>
+        <p className="v2-comparison-close">Menos tempo comparando centenas de equipamentos. Mais segurança para investir no sistema certo.</p>
       </div>
     </section>
 
-    <section className="tc-story tc-shell">
-      <div className="tc-story-quote"><span>“</span><h2>Eu comprava discos de R$ 300, R$ 400 e até R$ 500 — mas continuava usando um toca-discos antigo.</h2></div>
-      <div className="tc-story-copy"><span className="tc-kicker">De onde veio a ideia</span><p>Quando fui pesquisar qual sistema comprar, percebi que escolher o toca-discos era apenas o começo. Era preciso entender pré-amplificação, caixas ativas e passivas, regulagem do braço, cápsulas, agulhas, amplificadores, cabos e até se o Bluetooth enviava ou recebia áudio.</p><p>O Toca Certo nasceu para organizar essa decisão: pesquisar, montar e explicar um sistema adequado à realidade de cada pessoa.</p></div>
+    <section className="v2-delivery v2-shell">
+      <header className="v2-section-head"><span className="v2-number">08</span><div><span className="v2-overline">O que você recebe</span><h2>Um projeto para comprar, conectar e evoluir.</h2><p>Toda a análise técnica e a pesquisa de equipamentos reunidas em um material feito para seu ambiente, seu orçamento e sua forma de ouvir música.</p></div></header>
+      <figure className="v2-section-art v2-delivery-art"><img src="/VTSD%20TOCACERTO/7.png" alt="Visão dos entregáveis do Toca Certo: diagnóstico, página exclusiva, opções de setup, mapa de compra, conexão e justificativas" width="1448" height="1086" loading="lazy" /></figure>
+      <div className="v2-delivery-grid">{deliverables.map(([title, copy], index) => <article key={title}><span>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{copy}</p></article>)}</div>
     </section>
 
-    <section className="tc-manifesto"><div className="tc-shell"><Logo /><p>Você não precisa do toca-discos mais caro.</p><h2>Precisa do sistema certo para o seu espaço, orçamento e forma de ouvir música.</h2></div></section>
-
-    <section className="tc-offer tc-shell" id="oferta">
-      <div className="tc-offer-intro"><span className="tc-kicker">Edição beta · proposta inicial</span><h2>Seu projeto completo, antes de gastar com os equipamentos.</h2><p>Esta é a configuração pensada para os primeiros clientes e ainda será validada durante o piloto.</p>
-        <div className="tc-price"><small>Valor beta provisório</small><span>R$</span><strong>67</strong></div><p className="tc-deadline">Entrega prevista em até 5 dias úteis após o envio completo das informações.</p>
+    <section className="v2-about">
+      <div className="v2-shell v2-about-grid">
+        <figure className="v2-about-photo"><img src="/VTSD%20TOCACERTO/8.png" alt="Vitor segurando um disco de vinil" width="1024" height="1536" loading="lazy" /></figure>
+        <div className="v2-about-copy"><span className="v2-number">09</span><span className="v2-overline">Oi, eu sou o Vitor</span><h2>Minha relação com o áudio começou muito antes do Toca Certo.</h2><p>Cresci próximo desse universo porque meu pai era marceneiro e construía caixas de som. Desde cedo, áudio deixou de ser apenas uma forma de ouvir música e passou a despertar minha curiosidade.</p><p>Mais tarde, estudei Engenharia Acústica durante três anos, aprofundando meu conhecimento sobre som, reprodução e funcionamento de sistemas de áudio.</p><p>Ao trabalhar diariamente com discos por meio da Vivinil, percebi que quem começa no vinil encontra muitas recomendações isoladas e pouca orientação para montar um sistema completo dentro da própria realidade. O Toca Certo nasceu para transformar pesquisa e conhecimento técnico em uma recomendação clara, prática e personalizada.</p></div>
       </div>
-      <div className="tc-offer-card"><h3>Incluído no projeto</h3><ul><li>Diagnóstico personalizado do perfil</li><li>Três opções de setup</li><li>Comparativo de preços e recursos</li><li>Lista completa de compra</li><li>Diagrama de conexão</li><li>Explicação das escolhas e limitações</li><li>Plano de upgrades</li><li>Uma rodada de dúvidas</li><li>Uma revisão da recomendação</li></ul><a className="tc-button" href={CHECKOUT_URL}>Quero participar da beta <span>→</span></a><small>Pagamento processado com segurança pela Hotmart.</small></div>
     </section>
 
-    <section className="tc-guarantee tc-shell"><span>Revisão de satisfação</span><div><h2>O projeto precisa fazer sentido para a sua realidade.</h2><p>Se a recomendação não responder adequadamente às informações enviadas, você poderá solicitar uma revisão completa. Se, mesmo após a revisão, o projeto ainda não fizer sentido, o valor será devolvido.</p></div></section>
+    <section className="v2-offer" id="oferta">
+      <div className="v2-shell v2-offer-grid">
+        <div className="v2-offer-copy"><span className="v2-number">10</span><span className="v2-overline">Edição beta</span><h2>Decida primeiro.<br/>Compre depois.</h2><p>Receba uma página exclusiva com até três sistemas completos, selecionados de acordo com seu orçamento, ambiente, preferências e equipamentos atuais.</p><div className="v2-price"><small>Pagamento único</small><span>R$</span><strong>67</strong></div><p className="v2-timing">O prazo de até 5 dias úteis começa depois do envio completo do questionário.</p></div>
+        <div className="v2-offer-card"><div className="v2-offer-label">Primeiras vagas</div><h3>Projeto Toca Certo</h3><ul><li>Página exclusiva com seu plano</li><li>Diagnóstico personalizado</li><li>Até três sistemas completos</li><li>Comparativo de preços e recursos</li><li>Lista completa de compra</li><li>Diagrama de conexão</li><li>Explicação das escolhas e limitações</li><li>Plano de upgrades</li><li>Uma rodada de dúvidas</li><li>Uma revisão da recomendação</li></ul><a className="v2-button" href={CHECKOUT_URL}>Quero meu Toca Certo <b>→</b></a><small>Os equipamentos não estão incluídos. Pagamento seguro pela Hotmart.</small></div>
+      </div>
+    </section>
 
-    <section className="tc-faq tc-shell"><div className="tc-section-heading"><span className="tc-kicker">Perguntas frequentes</span><h2>Antes de colocar o primeiro disco.</h2></div><div className="tc-faq-list">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></section>
+    <section className="v2-faq-section">
+      <div className="v2-faq v2-shell"><header><span className="v2-number">11</span><span className="v2-overline">Perguntas frequentes</span><h2>O que ainda precisa ficar claro?</h2></header><div>{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></div>
+    </section>
 
-    <section className="tc-beta" id="beta"><div className="tc-shell"><span className="tc-eyebrow">Edição beta</span><h2>As primeiras vagas estão abertas.</h2><p>Esta edição existe para validar o processo com os primeiros clientes. Você recebe o projeto completo, uma rodada de dúvidas e uma revisão da recomendação.</p><a className="tc-button tc-button-light" href={CHECKOUT_URL}>Quero meu projeto Toca Certo <span>→</span></a></div></section>
+    <section className="v2-final-section"><div className="v2-final v2-shell"><V2Logo /><h2>Evite descobrir o que faltava somente depois da compra.</h2><a href={CHECKOUT_URL}>Quero montar o sistema certo <span>→</span></a></div></section>
 
-    <footer className="tc-footer tc-shell"><Brand /><div><p>Projeto independente de curadoria para sistemas de vinil.</p><a href="/questionario">Visualizar questionário de teste</a></div></footer>
+    <footer className="v2-footer v2-shell"><V2Brand /><p>Projeto independente de curadoria para sistemas de vinil.</p></footer>
   </main>;
 }
