@@ -61,7 +61,6 @@ export function Questionnaire() {
   const [started, setStarted] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
-  const [copied, setCopied] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -128,7 +127,6 @@ export function Questionnaire() {
     scrollTo({ top: 0, behavior: "smooth" });
   }
   function back() { setError(""); setStep(s => Math.max(0, s - 1)); scrollTo({ top: 0, behavior: "smooth" }); }
-  function reset() { setAnswers(initial); setFiles([]); setStep(0); setStarted(false); setDone(false); localStorage.removeItem("setup-vinil-form"); }
   function chooseFiles(e: ChangeEvent<HTMLInputElement>) {
     const selected = Array.from(e.target.files || []);
     if (selected.reduce((total, file) => total + file.size, 0) > MAX_UPLOAD_BYTES) {
@@ -140,8 +138,6 @@ export function Questionnaire() {
     setFiles(selected);
     setError("");
   }
-  async function copy() { await navigator.clipboard.writeText(summary); setCopied(true); setTimeout(() => setCopied(false), 2000); }
-
   if (!started) return <main className="landing">
     <header className="brand"><Logo /><span>Toca Certo</span><mark>Pós-compra · teste</mark></header>
     <section className="hero">
@@ -154,10 +150,23 @@ export function Questionnaire() {
     </section><Record />
   </main>;
 
-  if (done) return <main className="page"><Top beta="Protótipo" /><section className="success">
-    <div className="successIcon">✓</div><div className="eyebrow">Teste concluído</div><h1>Obrigado, {get("name")}.</h1>
-    <p>Seu diagnóstico foi enviado para análise. Guarde uma cópia das respostas se quiser consultar o que informou.</p>
-    <pre>{summary}</pre><div className="successActions"><button className="primary" onClick={copy}>{copied ? "Respostas copiadas!" : "Copiar respostas"}</button><button className="text" onClick={reset}>Novo teste</button></div>
+  if (done) return <main className="page successPage"><Top beta="Diagnóstico enviado" /><section className="success successV2">
+    <div className="successHero">
+      <div className="successIcon">✓</div>
+      <div className="eyebrow">Diagnóstico recebido</div>
+      <h1>Obrigado, {get("name")}.<br/><em>Agora é com a gente.</em></h1>
+      <p>Seu questionário e os anexos foram enviados com sucesso. Vamos analisar cada detalhe antes de montar uma recomendação para a sua realidade.</p>
+    </div>
+    <div className="successSteps">
+      <article><b>01</b><span>Recebido agora</span><p>Suas respostas chegaram e já estão prontas para análise.</p></article>
+      <article><b>02</b><span>Análise do sistema</span><p>Vamos conferir compatibilidade, preços e as melhores alternativas.</p></article>
+      <article><b>03</b><span>Entrega do projeto</span><p>Você receberá o relatório personalizado em até 5 dias úteis.</p></article>
+    </div>
+    <div className="successDelivery">
+      <div><small>Onde você receberá</small><strong>{get("email")}</strong></div>
+      <p>Fique de olho também na caixa de spam. Se precisarmos confirmar alguma informação, entraremos em contato antes de finalizar o projeto.</p>
+    </div>
+    <a className="successHome" href="/">← Voltar para o Toca Certo</a>
   </section></main>;
 
   return <main className="page"><Top />
@@ -178,8 +187,8 @@ export function Questionnaire() {
         <Question n="5" title="Envie fotos dos equipamentos" help="Frente, etiqueta e conexões traseiras. Limite total de 10 MB." optional><label className="upload"><input type="file" accept="image/*" multiple onChange={chooseFiles}/><b>＋</b><strong>{files.length ? `${files.length} arquivo(s) selecionado(s)` : "Escolher fotos"}</strong><small>JPG, PNG ou HEIC</small></label>{files.length>0&&<div className="fileList">{files.map((file,index)=><span key={`${file.name}-${index}`}>{file.name}</span>)}</div>}</Question>
       </>}
 
-      {step === 2 && <><Intro n="03" title="Quanto você quer investir?" text="O orçamento é para o sistema funcionar por completo, sem compras-surpresa depois." />
-        <Question n="6" title="Qual é seu orçamento total agora?"><Radio name="budget" value={get("budget")} change={v=>set("budget",v)} columns={2} options={opts("Até R$ 1.000","R$ 1.001 a R$ 1.500","R$ 1.501 a R$ 2.500","R$ 2.501 a R$ 5.000","Mais de R$ 5.000","Ainda não defini")} /></Question>
+      {step === 2 && <><Intro n="03" title="Qual é o limite desta compra?" text="Vamos tratar o orçamento como teto, não como meta de gasto." />
+        <Question n="6" title="Qual é o valor máximo que você pretende investir agora?" help="Informe o teto total da compra, mesmo que prefira gastar menos."><Field label="Limite máximo" value={get("budget")} change={v=>set("budget",v)} placeholder="Ex.: R$ 2.000" /></Question>
         <Question n="7" title="O que precisa caber nesse valor?" help="Marque tudo o que o orçamento deve incluir."><Checks values={list("included")} change={v=>set("included",v)} options={opts("Toca-discos","Caixas","Amplificador ou receiver","Cabos e acessórios","Frete")} /></Question>
         <Question n="8" title="E se não for possível montar com segurança dentro desse valor?"><Radio name="budgetPlan" value={get("budgetPlan")} change={v=>set("budgetPlan",v)} options={opts(["Não ultrapassar o limite","Quero a melhor solução possível dentro dele"],["Comprar em etapas","Posso completar o sistema depois"],["Mostrar opção um pouco acima","Se a diferença realmente valer a pena"])} /></Question>
       </>}
