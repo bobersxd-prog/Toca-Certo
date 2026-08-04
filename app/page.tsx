@@ -1,3 +1,5 @@
+const CHECKOUT_URL = "https://pay.hotmart.com/N107012543U";
+
 const doubts = [
   "O toca-discos já possui pré-amplificador?",
   "As caixas precisam ser ativas ou passivas?",
@@ -46,7 +48,7 @@ export default function Home() {
         <h1>Você já tem os discos. Agora monte o <em>sistema certo</em> para ouvi-los.</h1>
         <p>Receba um projeto personalizado com toca-discos, caixas, amplificação, cabos e acessórios adequados ao seu orçamento, espaço e maneira de ouvir música.</p>
         <div className="tc-actions">
-          <a className="tc-button" href="#oferta">Quero descobrir meu setup ideal <span>→</span></a>
+          <a className="tc-button" href={CHECKOUT_URL}>Quero descobrir meu setup ideal <span>→</span></a>
           <small>Edição beta · proposta inicial</small>
         </div>
       </div>
@@ -116,14 +118,14 @@ export default function Home() {
       <div className="tc-offer-intro"><span className="tc-kicker">Edição beta · proposta inicial</span><h2>Seu projeto completo, antes de gastar com os equipamentos.</h2><p>Esta é a configuração pensada para os primeiros clientes e ainda será validada durante o piloto.</p>
         <div className="tc-price"><small>Valor beta provisório</small><span>R$</span><strong>67</strong></div><p className="tc-deadline">Entrega prevista em até 5 dias úteis após o envio completo das informações.</p>
       </div>
-      <div className="tc-offer-card"><h3>Incluído no projeto</h3><ul><li>Diagnóstico personalizado do perfil</li><li>Três opções de setup</li><li>Comparativo de preços e recursos</li><li>Lista completa de compra</li><li>Diagrama de conexão</li><li>Explicação das escolhas e limitações</li><li>Plano de upgrades</li><li>Uma rodada de dúvidas</li><li>Uma revisão da recomendação</li></ul><a className="tc-button" href="#beta">Quero participar da beta <span>→</span></a><small>As primeiras vagas ainda não foram abertas.</small></div>
+      <div className="tc-offer-card"><h3>Incluído no projeto</h3><ul><li>Diagnóstico personalizado do perfil</li><li>Três opções de setup</li><li>Comparativo de preços e recursos</li><li>Lista completa de compra</li><li>Diagrama de conexão</li><li>Explicação das escolhas e limitações</li><li>Plano de upgrades</li><li>Uma rodada de dúvidas</li><li>Uma revisão da recomendação</li></ul><a className="tc-button" href={CHECKOUT_URL}>Quero participar da beta <span>→</span></a><small>Pagamento processado com segurança pela Hotmart.</small></div>
     </section>
 
     <section className="tc-guarantee tc-shell"><span>Revisão de satisfação</span><div><h2>O projeto precisa fazer sentido para a sua realidade.</h2><p>Se a recomendação não responder adequadamente às informações enviadas, você poderá solicitar uma revisão completa. Se, mesmo após a revisão, o projeto ainda não fizer sentido, o valor será devolvido.</p></div></section>
 
     <section className="tc-faq tc-shell"><div className="tc-section-heading"><span className="tc-kicker">Perguntas frequentes</span><h2>Antes de colocar o primeiro disco.</h2></div><div className="tc-faq-list">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></section>
 
-    <section className="tc-beta" id="beta"><div className="tc-shell"><span className="tc-eyebrow">Estamos construindo a primeira edição</span><h2>Esta página também faz parte do teste.</h2><p>A oferta, o preço e alguns itens ainda serão refinados depois dos primeiros projetos. Por enquanto, ela serve para enxergar a proposta inteira e descobrir o que precisa ficar mais claro antes de abrir as vagas.</p><a className="tc-button tc-button-light" href="mailto:contato@tocacerto.com.br?subject=Quero%20acompanhar%20a%20beta%20do%20Toca%20Certo">Quero acompanhar a beta <span>→</span></a></div></section>
+    <section className="tc-beta" id="beta"><div className="tc-shell"><span className="tc-eyebrow">Edição beta</span><h2>As primeiras vagas estão abertas.</h2><p>Esta edição existe para validar o processo com os primeiros clientes. Você recebe o projeto completo, uma rodada de dúvidas e uma revisão da recomendação.</p><a className="tc-button tc-button-light" href={CHECKOUT_URL}>Quero meu projeto Toca Certo <span>→</span></a></div></section>
 
     <footer className="tc-footer tc-shell"><Brand /><div><p>Projeto independente de curadoria para sistemas de vinil.</p><a href="/questionario">Visualizar questionário de teste</a></div></footer>
   </main>;
