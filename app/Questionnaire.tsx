@@ -8,7 +8,7 @@ const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 
 const initial: Answers = {
   turntable: "", journey: "", turntableModel: "", speakers: "", speakerType: "",
-  speakerModel: "", amplifier: "", amplifierModel: "", budget: "", included: [],
+  speakerModel: "", amplifier: "", amplifierModel: "", budget: "", included: "",
   budgetPlan: "", essentials: [], operation: "", adjustments: "", used: "",
   room: "", space: "", volume: "", voltage: "", name: "", email: "", contact: "",
   notes: "", links: "", records: "", garimpo: "",
@@ -20,7 +20,7 @@ const labels: Record<string, string> = {
   turntable: "Situação do toca-discos", journey: "Objetivo", turntableModel: "Toca-discos atual",
   speakers: "Caixas existentes", speakerType: "Tipo das caixas", speakerModel: "Modelo das caixas",
   amplifier: "Amplificador ou receiver", amplifierModel: "Modelo da amplificação", budget: "Orçamento",
-  included: "O orçamento inclui", budgetPlan: "Se o orçamento não for suficiente",
+  included: "Escopo do orçamento", budgetPlan: "Se o orçamento não for suficiente",
   essentials: "Recursos indispensáveis", operation: "Operação", adjustments: "Ajustes do braço",
   used: "Equipamentos usados", room: "Ambiente", space: "Espaço", volume: "Volume habitual",
   voltage: "Tensão", name: "Nome no relatório", email: "E-mail da compra", contact: "Contato", notes: "Observações",
@@ -66,7 +66,14 @@ export function Questionnaire() {
   useEffect(() => {
     const raw = localStorage.getItem("setup-vinil-form");
     if (!raw) return;
-    try { const saved = JSON.parse(raw); setAnswers({ ...initial, ...saved.answers }); setStep(saved.step || 0); setStarted(Boolean(saved.started)); } catch { localStorage.removeItem("setup-vinil-form"); }
+    try {
+      const saved = JSON.parse(raw);
+      const savedAnswers = { ...saved.answers };
+      if (Array.isArray(savedAnswers.included)) savedAnswers.included = "";
+      setAnswers({ ...initial, ...savedAnswers });
+      setStep(saved.step || 0);
+      setStarted(Boolean(saved.started));
+    } catch { localStorage.removeItem("setup-vinil-form"); }
   }, []);
 
   useEffect(() => { if (started && !done) localStorage.setItem("setup-vinil-form", JSON.stringify({ answers, step, started })); }, [answers, step, started, done]);
@@ -85,7 +92,7 @@ export function Questionnaire() {
     const rules = [
       get("turntable") && get("journey"),
       get("speakers") && (get("speakers") === "Não tenho caixas" || get("speakerType")) && get("amplifier"),
-      get("budget") && list("included").length && get("budgetPlan"),
+      get("budget") && get("included") && get("budgetPlan"),
       get("operation") && get("adjustments") && get("used"),
       get("room") && get("space") && get("volume") && get("voltage"),
       get("name").trim() && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(get("email").trim()),
@@ -189,7 +196,8 @@ export function Questionnaire() {
 
       {step === 2 && <><Intro n="03" title="Qual é o limite desta compra?" text="Vamos tratar o orçamento como teto, não como meta de gasto." />
         <Question n="6" title="Qual é o valor máximo que você pretende investir agora?" help="Informe o teto total da compra, mesmo que prefira gastar menos."><Field label="Limite máximo" value={get("budget")} change={v=>set("budget",v)} placeholder="Ex.: R$ 2.000" /></Question>
-        <Question n="7" title="O que precisa caber nesse valor?" help="Marque tudo o que o orçamento deve incluir."><Checks values={list("included")} change={v=>set("included",v)} options={opts("Toca-discos","Caixas","Amplificador ou receiver","Cabos e acessórios","Frete")} /></Question>
+        {get("journey") === "Montar meu primeiro sistema completo" && get("speakers") === "Não tenho caixas" && get("amplifier") === "Não" && <div className="budgetHint"><b>Um cuidado para o seu caso</b><p>Considere informar o orçamento total para o sistema funcionar, incluindo toca-discos, caixas, amplificação, cabos e frete.</p></div>}
+        <Question n="7" title="Esse orçamento deve cobrir o quê?"><Radio name="included" value={get("included")} change={v=>set("included",v)} columns={2} options={opts(["Sistema completo pronto para tocar","Incluindo todos os componentes necessários"],["Somente o toca-discos","O restante do sistema já está resolvido"],["Toca-discos e caixas","O limite deve cobrir esses dois itens"],["Apenas um upgrade específico","Uma melhoria no sistema que já possuo"])} /></Question>
         <Question n="8" title="E se não for possível montar com segurança dentro desse valor?"><Radio name="budgetPlan" value={get("budgetPlan")} change={v=>set("budgetPlan",v)} options={opts(["Não ultrapassar o limite","Quero a melhor solução possível dentro dele"],["Comprar em etapas","Posso completar o sistema depois"],["Mostrar opção um pouco acima","Se a diferença realmente valer a pena"])} /></Question>
       </>}
 
