@@ -7,13 +7,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
   const image = `${protocol}://${host}/og.png`;
-  const description = "Descubra o sistema de vinil adequado ao seu orçamento, espaço e maneira de ouvir música.";
+  const description = "Um projeto personalizado para montar ou melhorar seu sistema de vinil sem compras incompatíveis ou desnecessárias.";
 
   return {
-    title: "Questionário | Setup de Vinil Inteligente",
+    title: "Toca Certo | O sistema certo para ouvir seus discos",
     description,
-    openGraph: { title: "Setup de Vinil Inteligente", description, images: [{ url: image, width: 1536, height: 1024 }] },
-    twitter: { card: "summary_large_image", title: "Setup de Vinil Inteligente", description, images: [image] },
+    openGraph: { title: "Toca Certo", description, images: [{ url: image, width: 1536, height: 1024 }] },
+    twitter: { card: "summary_large_image", title: "Toca Certo", description, images: [image] },
   };
 }
 

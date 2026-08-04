@@ -76,7 +76,7 @@ export function Questionnaire() {
   const summary = useMemo(() => {
     const lines = Object.entries(answers).filter(([,v]) => Array.isArray(v) ? v.length : v.trim()).map(([k,v]) => `${labels[k]}: ${Array.isArray(v) ? v.join(", ") : v}`);
     if (files.length) lines.push(`Fotos selecionadas: ${files.join(", ")}`);
-    return `SETUP DE VINIL INTELIGENTE — TESTE\n\n${lines.join("\n")}`;
+    return `TOCA CERTO — QUESTIONÁRIO DE TESTE\n\n${lines.join("\n")}`;
   }, [answers, files]);
 
   function valid() {
@@ -104,7 +104,7 @@ export function Questionnaire() {
   async function copy() { await navigator.clipboard.writeText(summary); setCopied(true); setTimeout(() => setCopied(false), 2000); }
 
   if (!started) return <main className="landing">
-    <header className="brand"><Logo /><span>Setup de Vinil Inteligente</span><mark>Beta</mark></header>
+    <header className="brand"><Logo /><span>Toca Certo</span><mark>Pós-compra · teste</mark></header>
     <section className="hero">
       <div className="eyebrow">Seu sistema começa com as perguntas certas</div>
       <h1>Vamos descobrir o setup que faz sentido para você.</h1>
@@ -173,7 +173,7 @@ export function Questionnaire() {
 }
 
 function Logo() { return <i className="logo" aria-hidden="true"><b /></i>; }
-function Top({ beta = "Rascunho salvo" }: { beta?: string }) { return <header className="top"><div><Logo/><span>Setup de Vinil Inteligente</span></div><small>● {beta}</small></header>; }
+function Top({ beta = "Rascunho salvo" }: { beta?: string }) { return <header className="top"><div><Logo/><span>Toca Certo</span></div><small>● {beta}</small></header>; }
 function Record() { return <div className="record" aria-hidden="true"><i/><i/><i/><b><span>SEU<br/>SETUP</span></b></div>; }
 function Intro({n,title,text}:{n:string;title:string;text:string}) { return <div className="intro"><b>{n}</b><div><h1>{title}</h1><p>{text}</p></div></div>; }
 function Panel({children}:{children:React.ReactNode}) { return <div className="panel">{children}</div>; }
