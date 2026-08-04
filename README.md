@@ -43,7 +43,7 @@ npm run build
 
 - React;
 - TypeScript;
-- vinext;
+- Next.js;
 - CSS responsivo.
 
 ## Marca
