@@ -38,6 +38,26 @@ const plan: PlanData = {
     "Verificar disponibilidade, voltagem e itens incluídos na caixa.",
     "Tratar os valores como fotografia do dia e horário da pesquisa.",
   ],
+  recordDiscovery: {
+    profile: "Como o gosto musical ainda não foi informado neste caso piloto, estas são portas de entrada gerais. Nos próximos planos, os títulos e as lojas serão selecionados conforme os gêneros, artistas e discos desejados no questionário.",
+    options: [
+      {
+        eyebrow: "Garimpo e catálogo",
+        title: "Vivinil",
+        copy: "Confira discos disponíveis e oportunidades selecionadas para começar ou ampliar sua coleção.",
+        url: "https://vivinil.com.br",
+        cta: "Ver discos na Vivinil",
+      },
+      {
+        eyebrow: "Clube de assinatura",
+        title: "Noize Record Club",
+        copy: "Uma alternativa interessante para descobrir edições especiais e receber novos discos ao longo do ano. Antes de assinar, confira se o catálogo recente combina com o seu gosto.",
+        url: "https://noize-record-club.myshopify.com?invite_code=tkxuoNbmSjV9&referrer_name=4794",
+        cta: "Conhecer a assinatura da Noize",
+        affiliate: true,
+      },
+    ],
+  },
   options: [
     {
       id: "economico",

@@ -23,8 +23,8 @@ const comparison = [
 ];
 
 const deliverables = [
-  ["Página exclusiva", "Seu plano fica organizado em um endereço individual, feito para consultar durante a compra e a montagem."],
   ["Diagnóstico personalizado", "Uma leitura clara do seu momento, prioridades, equipamentos atuais e restrições."],
+  ["Página exclusiva", "Seu plano fica organizado em um endereço individual, feito para consultar durante a compra e a montagem."],
   ["Até três sistemas completos", "Custo-benefício, recomendação principal e opção evolutiva — quando esses três caminhos fizerem sentido."],
   ["Comparativo e mapa de compras", "Preços pesquisados, recursos, links, cabos, adaptadores e itens opcionais reunidos no mesmo lugar."],
   ["Conexão e explicações", "Um diagrama simples mostra como tudo se liga; os textos explicam escolhas, limitações e alternativas."],

@@ -11,7 +11,7 @@ const initial: Answers = {
   speakerModel: "", amplifier: "", amplifierModel: "", budget: "", budgetLimit: "", included: "",
   budgetPlan: "", essentials: [], operation: "", adjustments: "", used: "",
   room: "", space: "", volume: "", voltage: "", name: "", email: "", contact: "",
-  notes: "", links: "", records: "", garimpo: "",
+  notes: "", links: "", records: "", musicTaste: "", recordWishlist: "", garimpo: "",
 };
 
 const steps = ["Objetivo", "Equipamentos", "Orçamento", "Preferências", "Ambiente", "Finalização"];
@@ -24,7 +24,8 @@ const labels: Record<string, string> = {
   essentials: "Recursos indispensáveis", operation: "Operação", adjustments: "Ajustes do braço",
   used: "Equipamentos usados", room: "Ambiente", space: "Espaço", volume: "Volume habitual",
   voltage: "Tensão", name: "Nome no relatório", email: "E-mail da compra", contact: "Contato", notes: "Observações",
-  links: "Links e modelos considerados", records: "Sugestões de discos", garimpo: "Garimpo Vivinil",
+  links: "Links e modelos considerados", records: "Sugestões de discos", musicTaste: "Gêneros e artistas favoritos",
+  recordWishlist: "Discos desejados", garimpo: "Garimpo Vivinil",
 };
 
 type Option = { value: string; label: string; detail?: string };
@@ -222,7 +223,7 @@ export function Questionnaire() {
         <Question n="19" title="Quer informar também um WhatsApp?" optional><Field label="WhatsApp" value={get("contact")} change={v=>set("contact",v)} placeholder="(00) 00000-0000" /></Question>
         <Question n="20" title="Tem algo importante que não perguntamos?" help="Pode contar sobre objetivo, espaço, equipamentos ou qualquer restrição." optional><textarea value={get("notes")} onChange={e=>set("notes",e.target.value)} placeholder="Escreva livremente…" rows={5}/></Question>
         <Question n="21" title="Já está considerando algum produto?" help="Cole links ou escreva os modelos." optional><textarea value={get("links")} onChange={e=>set("links",e.target.value)} placeholder="Links ou modelos…" rows={3}/></Question>
-        <div className="bonus"><mark>Opcional</mark><h2>Depois do setup, os discos</h2><p>Estes itens não alteram o diagnóstico técnico.</p><label>Quer receber sugestões de discos?</label><Radio name="records" value={get("records")} change={v=>set("records",v)} columns={2} options={opts("Sim","Não")} /><label>Quer conhecer futuramente o Grupo de Garimpo da Vivinil?</label><Radio name="garimpo" value={get("garimpo")} change={v=>set("garimpo",v)} columns={2} options={opts("Sim, tenho interesse","Agora não")} /></div>
+        <div className="bonus"><mark>Opcional</mark><h2>Depois do setup, os discos</h2><p>Estes itens não alteram o diagnóstico técnico, mas ajudam a personalizar as indicações para a sua coleção.</p><label>Quer receber sugestões de discos?</label><Radio name="records" value={get("records")} change={v=>set("records",v)} columns={2} options={opts("Sim","Não")} />{get("records") === "Sim" && <div className="musicProfile"><label>Quais gêneros e artistas você mais escuta?</label><textarea value={get("musicTaste")} onChange={e=>set("musicTaste",e.target.value)} placeholder="Ex.: MPB, jazz e rock brasileiro. Tim Maia, Gal Costa, Clube da Esquina…" rows={3}/><label>Tem algum disco que gostaria de encontrar?</label><textarea value={get("recordWishlist")} onChange={e=>set("recordWishlist",e.target.value)} placeholder="Escreva títulos ou artistas que estão na sua lista de desejos…" rows={3}/></div>}<label>Quer conhecer futuramente o Grupo de Garimpo da Vivinil?</label><Radio name="garimpo" value={get("garimpo")} change={v=>set("garimpo",v)} columns={2} options={opts("Sim, tenho interesse","Agora não")} /></div>
       </>}
       {error && <div className="error" role="alert">{error}</div>}
       <footer>{step > 0 ? <button className="secondary" onClick={back} disabled={submitting}>← Voltar</button> : <button className="text" onClick={()=>setStarted(false)}>Sair</button>}<button className="primary" onClick={next} disabled={submitting}>{submitting?"Enviando…":step===5?"Enviar diagnóstico":"Continuar"} <b>→</b></button></footer>

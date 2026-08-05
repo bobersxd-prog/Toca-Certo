@@ -29,6 +29,10 @@ export type PlanData = {
   whyItWorks: { title: string; copy: string }[];
   connection: string[];
   shoppingNotes: string[];
+  recordDiscovery?: {
+    profile: string;
+    options: { eyebrow: string; title: string; copy: string; url: string; cta: string; affiliate?: boolean }[];
+  };
   alternatives: { name: string; total: string; assessment: string; offers?: StoreOffer[] }[];
   upgrades: { phase: string; title: string; copy: string }[];
 };
@@ -132,6 +136,14 @@ export function PlanTemplate({ plan }: { plan: PlanData }) {
           <ul>{plan.shoppingNotes.map(item => <li key={item}>{item}</li>)}</ul>
         </article>
       </section>
+
+      {plan.recordDiscovery && <section className={`${styles.card} ${styles.recordsSection}`}>
+        <header><div><small>Próximos discos para o seu sistema</small><h2>Continue sua coleção com escolhas mais alinhadas ao seu gosto</h2></div><p>{plan.recordDiscovery.profile}</p></header>
+        <div className={styles.recordGrid}>{plan.recordDiscovery.options.map(item => <article key={item.title}>
+          <span>{item.eyebrow}</span><h3>{item.title}</h3><p>{item.copy}</p><a href={item.url} target="_blank" rel={`noopener noreferrer${item.affiliate ? " nofollow sponsored" : ""}`}>{item.cta} <i>↗</i></a>
+        </article>)}</div>
+        <small className={styles.affiliateNotice}>Alguns links desta seção podem gerar comissão para o Toca Certo, sem alterar o preço pago por você. As indicações continuam sendo selecionadas conforme seu perfil e preferências.</small>
+      </section>}
 
       <section className={`${styles.card} ${styles.alternatives}`}>
         <header><div><small>Pesquisa ampliada</small><h2>Outras combinações mapeadas</h2></div><p>Servem como plano B para mudança de estoque, preço ou prioridade.</p></header>
