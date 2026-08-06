@@ -12,12 +12,15 @@ const differences = [
   ["01", "O sistema inteiro entra na análise", "Toca-discos, caixas, amplificação, cabos e acessórios são escolhidos como partes da mesma arquitetura."],
   ["02", "A recomendação parte da sua realidade", "Seu orçamento, espaço, equipamentos atuais e nível de praticidade definem o projeto — não uma lista genérica."],
   ["03", "Você entende a escolha e o próximo passo", "Cada indicação vem com vantagens, limitações e um caminho de evolução para não precisar trocar tudo depois."],
+  ["04", "O preço também faz parte da recomendação", "Comparamos preços e condições em lojas confiáveis para buscar a melhor oportunidade possível no momento da pesquisa — sem depender de uma única loja."],
 ];
 
 const comparison = [
   ["Ponto de partida", "Dezenas de vídeos, listas e opiniões", "Seu orçamento, espaço e equipamentos"],
   ["Compatibilidade", "Você precisa conferir componente por componente", "O sistema é analisado como um conjunto"],
-  ["Preço real", "Aparecem custos extras depois da escolha", "Cabos, adaptadores e acessórios entram na conta"],
+  ["Custo real", "Aparecem custos extras depois da escolha", "O valor do sistema completo entra na conta"],
+  ["Uso do orçamento", "É fácil investir demais em um componente", "Você vê onde economizar, investir ou esperar"],
+  ["Onde comprar", "Uma oferta isolada pode parecer a melhor", "Preços e condições são comparados em lojas confiáveis"],
   ["Decisão", "Mais opções podem aumentar a dúvida", "Três caminhos comparados e explicados"],
   ["Futuro", "O upgrade é pensado somente depois", "A evolução já faz parte do projeto"],
 ];
@@ -60,7 +63,6 @@ export default function Home() {
       <figure className="v2-hero-logo"><img src="/VTSD%20TOCACERTO/logo.png" alt="Toca Certo" width="1536" height="1024" fetchPriority="high" /></figure>
       <div className="v2-hero-grid">
         <div className="v2-hero-copy">
-          <span className="v2-overline">Antes de comprar o primeiro aparelho</span>
           <h1>Não compre seu toca-discos antes de saber <em>tudo o que precisa para fazê-lo tocar.</em></h1>
           <p>Receba um projeto personalizado com os equipamentos compatíveis para seu orçamento, espaço e forma de ouvir música.</p>
           <div className="v2-hero-actions">
@@ -109,21 +111,22 @@ export default function Home() {
     <section className="v2-proof v2-shell">
       <header className="v2-section-head">
         <span className="v2-number">06</span>
-        <div><span className="v2-overline">Decisões que a análise ajuda a evitar</span><h2>O gasto errado quase nunca está em um único aparelho.</h2><p>Enquanto os primeiros casos reais são construídos, estes exemplos demonstrativos mostram o tipo de decisão que entra na análise — sem depoimentos inventados.</p></div>
+        <div><span className="v2-overline">O retorno começa antes da compra</span><h2>Economizar não é encontrar o aparelho mais barato. É evitar gastar errado.</h2><p>Uma única compra incompatível, provisória ou desnecessária pode custar muito mais do que o projeto. O Toca Certo ajuda seu orçamento a render melhor antes que o dinheiro seja gasto.</p></div>
       </header>
       <div className="v2-proof-grid">
-        <article><span>EXEMPLO DEMONSTRATIVO</span><h3>As caixas eram passivas.</h3><p><b>Antes:</b> comprar somente o toca-discos.<br/><b>Problema:</b> as caixas não poderiam ser ligadas diretamente.<br/><b>Decisão:</b> incluir amplificação e os cabos corretos no orçamento.</p><small>Compatibilidade antes da compra</small></article>
-        <article><span>EXEMPLO DEMONSTRATIVO</span><h3>O orçamento estava desequilibrado.</h3><p><b>Antes:</b> concentrar quase todo o valor no toca-discos.<br/><b>Problema:</b> sobraria pouco para a parte que transformaria o sinal em som.<br/><b>Decisão:</b> redistribuir o investimento pelo sistema.</p><small>Orçamento visto como conjunto</small></article>
-        <article><span>EXEMPLO DEMONSTRATIVO</span><h3>Já existia uma peça útil.</h3><p><b>Antes:</b> substituir todo o conjunto antigo.<br/><b>Problema:</b> um componente ainda cumpria bem sua função.<br/><b>Decisão:</b> reaproveitá-lo e investir primeiro no ponto mais fraco.</p><small>Upgrade sem começar de novo</small></article>
+        <article><span>FORMA DE ECONOMIZAR</span><h3>Aproveite o que você já possui.</h3><p>Caixas, receivers e outros equipamentos existentes entram na análise antes de qualquer indicação de compra.</p><small>Não compre novamente o que ainda serve</small></article>
+        <article><span>FORMA DE ECONOMIZAR</span><h3>Compare o sistema completo.</h3><p>O toca-discos pode parecer barato até você somar caixas, amplificação, pré-phono, cabos, adaptadores e frete.</p><small>Conheça o custo antes de decidir</small></article>
+        <article><span>FORMA DE ECONOMIZAR</span><h3>Evite compras provisórias.</h3><p>Quando fizer sentido, o projeto organiza a compra em etapas para evitar componentes que logo precisariam ser substituídos.</p><small>Compre agora sem começar de novo depois</small></article>
+        <article><span>FORMA DE ECONOMIZAR</span><h3>Busque o melhor preço possível.</h3><p>Comparamos as melhores condições encontradas em lojas confiáveis no momento da pesquisa, incluindo diferenças de pagamento e frete.</p><small>Boa oportunidade sem depender de uma loja</small></article>
       </div>
-      <div className="v2-proof-cta"><p>Você continua escolhendo quanto quer investir. A diferença é decidir sabendo como tudo funcionará junto.</p><a className="v2-inline-cta" href={CHECKOUT_URL}>Quero analisar meu sistema <span>→</span></a></div>
+      <div className="v2-proof-cta"><p>O Toca Certo não ajuda você apenas a pagar menos. Ajuda você a gastar certo.</p><a className="v2-inline-cta" href={CHECKOUT_URL}>Quero fazer meu dinheiro render <span>→</span></a></div>
     </section>
 
     <section className="v2-comparison">
       <div className="v2-shell">
         <header className="v2-section-head"><span className="v2-number">07</span><div><span className="v2-overline">Pesquisar sozinho ou receber um plano?</span><h2>Informação grátis existe. O difícil é transformar tudo em uma decisão.</h2></div></header>
         <div className="v2-table"><div className="v2-table-head"><span></span><strong>Pesquisando sozinho</strong><strong>Com o Toca Certo</strong></div>{comparison.map(([label, alone, guided]) => <div className="v2-table-row" key={label}><b>{label}</b><span>{alone}</span><span>{guided}</span></div>)}</div>
-        <p className="v2-comparison-close">Menos tempo comparando centenas de equipamentos. Mais segurança para investir no sistema certo.</p>
+        <p className="v2-comparison-close">Por R$ 67, basta o projeto evitar uma pequena compra desnecessária para começar a se pagar — e uma decisão errada pode custar centenas ou até milhares de reais.</p>
       </div>
     </section>
 
@@ -142,8 +145,8 @@ export default function Home() {
 
     <section className="v2-offer" id="oferta">
       <div className="v2-shell v2-offer-grid">
-        <div className="v2-offer-copy"><span className="v2-number">10</span><span className="v2-overline">Edição beta</span><h2>Decida primeiro.<br/>Compre depois.</h2><p>Receba uma página exclusiva com até três sistemas completos, selecionados de acordo com seu orçamento, ambiente, preferências e equipamentos atuais.</p><div className="v2-price"><small>Pagamento único</small><span>R$</span><strong>67</strong></div><p className="v2-timing">O prazo de até 5 dias úteis começa depois do envio completo do questionário.</p></div>
-        <div className="v2-offer-card"><div className="v2-offer-label">Primeiras vagas</div><h3>Projeto Toca Certo</h3><ul><li>Página exclusiva com seu plano</li><li>Diagnóstico personalizado</li><li>Até três sistemas completos</li><li>Comparativo de preços e recursos</li><li>Lista completa de compra</li><li>Diagrama de conexão</li><li>Explicação das escolhas e limitações</li><li>Plano de upgrades</li><li>Uma rodada de dúvidas</li><li>Uma revisão da recomendação</li></ul><a className="v2-button" href={CHECKOUT_URL}>Quero meu Toca Certo <b>→</b></a><small>Os equipamentos não estão incluídos. Pagamento seguro pela Hotmart.</small></div>
+        <div className="v2-offer-copy"><span className="v2-number">10</span><span className="v2-overline">Edição beta</span><h2>Decida primeiro.<br/>Compre depois.</h2><p>Receba uma página exclusiva com até três sistemas completos, selecionados de acordo com seu orçamento, ambiente, preferências e equipamentos atuais.</p><p>Se o projeto evitar uma compra desnecessária ou encontrar uma combinação melhor pelo mesmo orçamento, os R$ 67 podem voltar para você antes mesmo de o primeiro disco tocar.</p><div className="v2-price"><small>Pagamento único</small><span>R$</span><strong>67</strong></div><p className="v2-timing">O prazo de até 5 dias úteis começa depois do envio completo do questionário.</p></div>
+        <div className="v2-offer-card"><div className="v2-offer-label">Primeiras vagas</div><h3>Projeto Toca Certo</h3><ul><li>Página exclusiva com seu plano</li><li>Diagnóstico personalizado</li><li>Até três sistemas completos</li><li>Comparativo de preços e recursos</li><li>Pesquisa de oportunidades em lojas confiáveis</li><li>Lista completa de compra</li><li>Diagrama de conexão</li><li>Explicação das escolhas e limitações</li><li>Plano de upgrades</li><li>Uma rodada de dúvidas</li><li>Uma revisão da recomendação</li></ul><a className="v2-button" href={CHECKOUT_URL}>Quero meu Toca Certo <b>→</b></a><small>Os equipamentos não estão incluídos. Pagamento seguro pela Hotmart.</small></div>
       </div>
     </section>
 
