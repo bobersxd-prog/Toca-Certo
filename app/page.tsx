@@ -111,15 +111,16 @@ export default function Home() {
     <section className="v2-proof v2-shell">
       <header className="v2-section-head">
         <span className="v2-number">06</span>
-        <div><span className="v2-overline">O retorno começa antes da compra</span><h2>Economizar não é encontrar o aparelho mais barato. É evitar gastar errado.</h2><p>Uma única compra incompatível, provisória ou desnecessária pode custar muito mais do que o projeto. O Toca Certo ajuda seu orçamento a render melhor antes que o dinheiro seja gasto.</p></div>
+        <div><span className="v2-overline">Economia que entra no seu plano</span><h2>Comprar certo também é economizar.</h2><p>O Toca Certo não mostra apenas quais equipamentos fazem sentido para você. Durante a elaboração do plano, eu garimpo preços, comparo condições de compra e organizo o sistema completo para fazer seu orçamento render o máximo possível.</p>
+        <p>A economia pode estar em encontrar uma oferta melhor, aproveitar um equipamento que você já possui ou evitar uma compra que precisaria ser refeita pouco tempo depois.</p></div>
       </header>
       <div className="v2-proof-grid">
-        <article><span>FORMA DE ECONOMIZAR</span><h3>Aproveite o que você já possui.</h3><p>Caixas, receivers e outros equipamentos existentes entram na análise antes de qualquer indicação de compra.</p><small>Não compre novamente o que ainda serve</small></article>
-        <article><span>FORMA DE ECONOMIZAR</span><h3>Compare o sistema completo.</h3><p>O toca-discos pode parecer barato até você somar caixas, amplificação, pré-phono, cabos, adaptadores e frete.</p><small>Conheça o custo antes de decidir</small></article>
-        <article><span>FORMA DE ECONOMIZAR</span><h3>Evite compras provisórias.</h3><p>Quando fizer sentido, o projeto organiza a compra em etapas para evitar componentes que logo precisariam ser substituídos.</p><small>Compre agora sem começar de novo depois</small></article>
-        <article><span>FORMA DE ECONOMIZAR</span><h3>Busque o melhor preço possível.</h3><p>Comparamos as melhores condições encontradas em lojas confiáveis no momento da pesquisa, incluindo diferenças de pagamento e frete.</p><small>Boa oportunidade sem depender de uma loja</small></article>
+        <article><h3>Garimpo das melhores condições</h3><p>Pesquiso os equipamentos selecionados em lojas e vendedores confiáveis no momento da criação do seu plano. Comparo preço anunciado, Pix, cartão, frete, voltagem, garantia e itens incluídos.</p><strong>Você recebe referências reais para começar sua compra.</strong></article>
+        <article><h3>O custo do sistema completo</h3><p>Um toca-discos pode parecer barato isoladamente, mas ainda exigir caixas, amplificação, pré-phono, cabos ou adaptadores. O plano considera o investimento total necessário para tudo funcionar.</p><strong>Você sabe quanto precisará investir antes de decidir.</strong></article>
+        <article><h3>Aproveitamento do que você já possui</h3><p>Caixas, receivers, amplificadores e outros equipamentos existentes entram na análise. Quando forem compatíveis e ainda atenderem às suas necessidades, poderão fazer parte do novo sistema.</p><strong>Você não compra novamente aquilo que ainda pode ser bem utilizado.</strong></article>
+        <article><h3>Compra planejada para não gastar duas vezes</h3><p>Se o orçamento não permitir montar tudo imediatamente, o plano pode organizar a compra por etapas e priorizar componentes que continuarão úteis conforme o sistema evoluir.</p><strong>Você começa na sua realidade sem perder de vista o próximo passo.</strong></article>
       </div>
-      <div className="v2-proof-cta"><p>O Toca Certo não ajuda você apenas a pagar menos. Ajuda você a gastar certo.</p><a className="v2-inline-cta" href={CHECKOUT_URL}>Quero fazer meu dinheiro render <span>→</span></a></div>
+      <div className="v2-proof-cta"><div><strong>Mais do que procurar o menor preço, eu faço seu orçamento trabalhar melhor.</strong><p>O objetivo é encontrar a melhor combinação possível dentro do valor que você pretende investir — aproveitando boas oportunidades e evitando gastos desnecessários.</p></div><a className="v2-inline-cta" href={CHECKOUT_URL}>Quero aproveitar melhor meu orçamento <span>→</span></a></div>
     </section>
 
     <section className="v2-comparison">
