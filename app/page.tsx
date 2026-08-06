@@ -49,14 +49,6 @@ const faqs = [
   ["E se a recomendação não fizer sentido?", "Você poderá pedir a revisão incluída. Se, mesmo depois dela, o projeto não responder adequadamente ao diagnóstico enviado, o valor será devolvido."],
 ];
 
-function V2Logo() {
-  return <span className="v2-logo" aria-hidden="true"><i /><b /></span>;
-}
-
-function V2Brand() {
-  return <a className="v2-brand" href="#topo"><V2Logo /><span><strong>Toca Certo</strong><small>Seu sistema de vinil, sem compras erradas.</small></span></a>;
-}
-
 export default function Home() {
   return <main className="v2-page" id="topo">
     <section className="v2-hero v2-shell">
@@ -154,8 +146,6 @@ export default function Home() {
       <div className="v2-faq v2-shell"><header><span className="v2-number">11</span><span className="v2-overline">Perguntas frequentes</span><h2>O que ainda precisa ficar claro?</h2></header><div>{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></div>
     </section>
 
-    <section className="v2-final-section"><div className="v2-final v2-shell"><V2Logo /><h2>Evite descobrir o que faltava somente depois da compra.</h2><a href={CHECKOUT_URL}>Quero montar o sistema certo <span>→</span></a></div></section>
-
-    <footer className="v2-footer v2-shell"><V2Brand /><p>Projeto independente de curadoria para sistemas de vinil.</p></footer>
+    <section className="v2-final-section"><div className="v2-final v2-shell"><h2>Evite descobrir o que faltava somente depois da compra.</h2><a href={CHECKOUT_URL}>Quero montar o sistema certo <span>→</span></a></div></section>
   </main>;
 }
