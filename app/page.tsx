@@ -111,8 +111,7 @@ export default function Home() {
     <section className="v2-proof v2-shell">
       <header className="v2-section-head">
         <span className="v2-number">06</span>
-        <div><span className="v2-overline">Economia que entra no seu plano</span><h2>Comprar certo também é economizar.</h2><p>O Toca Certo não mostra apenas quais equipamentos fazem sentido para você. Durante a elaboração do plano, eu garimpo preços, comparo condições de compra e organizo o sistema completo para fazer seu orçamento render o máximo possível.</p>
-        <p>A economia pode estar em encontrar uma oferta melhor, aproveitar um equipamento que você já possui ou evitar uma compra que precisaria ser refeita pouco tempo depois.</p></div>
+        <div><span className="v2-overline">Economia que entra no seu plano</span><h2>Comprar certo também é economizar.</h2></div>
       </header>
       <div className="v2-proof-grid">
         <article><h3>Garimpo das melhores condições</h3><p>Pesquiso os equipamentos selecionados em lojas e vendedores confiáveis no momento da criação do seu plano. Comparo preço anunciado, Pix, cartão, frete, voltagem, garantia e itens incluídos.</p><strong>Você recebe referências reais para começar sua compra.</strong></article>
