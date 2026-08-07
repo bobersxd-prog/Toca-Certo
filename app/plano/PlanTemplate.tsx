@@ -1,3 +1,4 @@
+import Image from "next/image";
 import styles from "./PlanTemplate.module.css";
 import type { StoreOffer } from "../../data/equipmentCatalog";
 
@@ -8,16 +9,19 @@ export type PlanOption = {
   price: string;
   priceNote: string;
   verdict: string;
-  components: { type: "turntable" | "speakers"; name: string; detail: string; price?: string; offers?: StoreOffer[] }[];
+  components: { type: "turntable" | "speakers"; name: string; detail: string; price?: string; image?: string; imageAlt?: string; offers?: StoreOffer[] }[];
   strengths: string[];
   limits: string[];
   scores: { sound: number; ease: number; value: number; upgrade: number };
+  setupImage?: string;
+  setupImageAlt?: string;
   featured?: boolean;
   validation?: boolean;
 };
 
 export type PlanData = {
   planId: string;
+  status?: string;
   clientName: string;
   createdAt: string;
   updatedAt: string;
@@ -45,15 +49,19 @@ function Stars({ value }: { value: number }) {
   return <span className={styles.stars} aria-label={`${value} de 5`}>{[1,2,3,4,5].map(n => <i key={n} className={n <= value ? styles.on : ""}>★</i>)}</span>;
 }
 
-function ProductVisual({ type }: { type: "turntable" | "speakers" }) {
-  return type === "turntable"
+function ProductVisual({ component }: { component: PlanOption["components"][number] }) {
+  if (component.image) {
+    return <span className={`${styles.productVisual} ${styles.productPhoto}`}><Image src={component.image} alt={component.imageAlt ?? component.name} fill sizes="110px" /></span>;
+  }
+
+  return component.type === "turntable"
     ? <span className={`${styles.productVisual} ${styles.turntable}`} aria-hidden="true"><i /><b /></span>
     : <span className={`${styles.productVisual} ${styles.speakers}`} aria-hidden="true"><i /><i /><b /></span>;
 }
 
 function ComponentList({ option }: { option: PlanOption }) {
   return <div className={styles.componentList}>{option.components.map(component => <article key={component.name}>
-    <ProductVisual type={component.type} />
+    <ProductVisual component={component} />
     <div className={styles.componentInfo}><small>{component.type === "turntable" ? "Toca-discos" : "Caixas ativas"}</small><strong>{component.name}</strong><span>{component.detail}</span></div>
     {component.price && <b>{component.price}</b>}
     {component.offers && component.offers.length > 0 && <div className={styles.offerLinks}>{component.offers.map(offer => <a key={`${component.name}-${offer.store}`} href={offer.url} target="_blank" rel="noopener noreferrer nofollow sponsored" className={offer.primary ? styles.primaryOffer : ""}><span>{offer.store}</span>{offer.price && <b>{offer.price}</b>}<i>↗</i></a>)}</div>}
@@ -70,11 +78,6 @@ export function PlanTemplate({ plan }: { plan: PlanData }) {
   ] as const;
 
   return <main className={styles.page}>
-    <header className={styles.topbar}>
-      <Brand />
-      <div className={styles.planMeta}><span>Plano #{plan.planId}</span><small>Criado em {plan.createdAt}</small></div>
-    </header>
-
     <div className={styles.shell}>
       <section className={styles.intro}>
         <div><span className={styles.kicker}>Plano personalizado de {plan.clientName}</span><h1>{plan.title}</h1><p>{plan.subtitle}</p></div>
