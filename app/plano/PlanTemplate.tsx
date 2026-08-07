@@ -135,7 +135,7 @@ export function PlanTemplate({ plan }: { plan: PlanData }) {
           <p>Use a saída do toca-discos em <b>LINE</b>. Nenhuma das três opções principais precisa de receiver ou pré-phono externo.</p>
         </article>
         <article className={`${styles.card} ${styles.checklistCard}`}>
-          <header><small>Antes de comprar</small><h2>O preço precisa ser conferido de novo</h2></header>
+          <header><small>Preços e disponibilidade</small><h2>As condições podem mudar depois da pesquisa</h2></header>
           <ul>{plan.shoppingNotes.map(item => <li key={item}>{item}</li>)}</ul>
         </article>
       </section>

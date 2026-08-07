@@ -26,11 +26,11 @@ export const plan: PlanData = {
   ],
   connection: ["AT-LP60X em LINE", "Cabo RCA", "Edifier R990BT ativa", "Caixa secundária"],
   shoppingNotes: [
-    "Confirmar o menor preço confiável e o vendedor antes de fechar a compra.",
-    "Registrar preço normal, promocional e forma de pagamento exigida.",
-    "Calcular o frete para o CEP antes de comparar os totais.",
-    "Verificar disponibilidade, voltagem e itens incluídos na caixa.",
-    "Tratar os valores como fotografia do dia e horário da pesquisa.",
+    "Os valores deste plano foram encontrados em 04/08/2026 e representam as condições disponíveis no momento da pesquisa.",
+    "Preços, estoque, frete, prazo de entrega e formas de pagamento podem mudar sem aviso.",
+    "Antes de concluir o pedido, confira o vendedor, a voltagem, a garantia e os itens incluídos.",
+    "Compare o valor final com o frete para o seu CEP — não apenas o preço anunciado.",
+    "Se alguma oferta deixar de fazer sentido durante o período de suporte, fale comigo para avaliarmos uma alternativa.",
   ],
   recordDiscovery: {
     profile: "Como o gosto musical ainda não foi informado neste caso piloto, estas são portas de entrada gerais. Nos próximos planos, os títulos e as lojas serão selecionados conforme os gêneros, artistas e discos desejados no questionário.",
